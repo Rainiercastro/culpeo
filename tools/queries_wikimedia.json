@@ -1,0 +1,29 @@
+[
+  {"id": "hero", "query": "Andes mountains Chile landscape"},
+  {"id": "about-materials", "query": "wool textile weaving"},
+  {"id": "about-lifestyle", "query": "hiker mountain trail backpack"},
+  {"id": "about-workshop", "query": "sewing workshop textile"},
+
+  {"id": "product-1", "query": "black baseball cap"},
+  {"id": "product-2", "query": "green baseball cap"},
+  {"id": "product-3", "query": "brown baseball cap"},
+  {"id": "product-4", "query": "gray baseball cap"},
+  {"id": "product-5", "query": "beige baseball cap"},
+  {"id": "product-6", "query": "white baseball cap"},
+
+  {"id": "park-lauca", "query": "Lauca National Park Chile"},
+  {"id": "park-isluga", "query": "Isluga volcano Chile"},
+  {"id": "park-pan-de-azucar", "query": "Pan de Azucar National Park Chile"},
+  {"id": "park-fray-jorge", "query": "Fray Jorge National Park Chile"},
+  {"id": "park-la-campana", "query": "La Campana National Park Chile"},
+  {"id": "park-rio-clarillo", "query": "Rio Clarillo National Reserve Chile"},
+  {"id": "park-radal-siete-tazas", "query": "Radal Siete Tazas Chile"},
+  {"id": "park-nahuelbuta", "query": "Nahuelbuta National Park Chile"},
+  {"id": "park-huerquehue", "query": "Huerquehue National Park Chile"},
+  {"id": "park-vicente-perez-rosales", "query": "Osorno Volcano Chile"},
+  {"id": "park-alerce-andino", "query": "Alerce Andino National Park Chile"},
+  {"id": "park-queulat", "query": "Queulat National Park hanging glacier Chile"},
+  {"id": "park-laguna-san-rafael", "query": "Laguna San Rafael glacier Chile"},
+  {"id": "park-torres-del-paine", "query": "Torres del Paine National Park Chile"},
+  {"id": "park-cabo-de-hornos", "query": "Cape Horn Chile"}
+]
