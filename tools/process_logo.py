@@ -35,18 +35,34 @@ logo_cream.putdata(recolored)
 logo_cream.save(f"{OUT}/logo-cream.webp", "WEBP", quality=90)
 
 # --- 3. Favicon: cream mark on dark warm circle ---
+# At 16-32px thin line-art nearly disappears, so the favicon uses a *dilated*
+# (thickened) copy of the mark, scaled to fill more of the circle. The
+# apple-touch-icon is shown much larger (home screen), so it keeps the
+# crisp original linework instead.
+from PIL import ImageDraw, ImageFilter
+
 FAV_BG = (14, 11, 9, 255)  # --bg
-size = 256
-canvas = Image.new("RGBA", (size, size), (0, 0, 0, 0))
-from PIL import ImageDraw
-draw = ImageDraw.Draw(canvas)
-draw.ellipse([0, 0, size, size], fill=FAV_BG)
-mark = max_side_resize(logo_cream, int(size * 0.66))
-mx = (size - mark.width) // 2
-my = (size - mark.height) // 2 - int(size * 0.03)
-canvas.alpha_composite(mark, (mx, my))
-canvas.save(f"{OUT}/favicon.png", "PNG")
-canvas.resize((32, 32), Image.LANCZOS).save(f"{OUT}/favicon-32.png", "PNG")
-canvas.resize((180, 180), Image.LANCZOS).save(f"{OUT}/apple-touch-icon.png", "PNG")
+
+def favicon_canvas(mark_src, scale_pct, size):
+    canvas = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(canvas)
+    draw.ellipse([0, 0, size, size], fill=FAV_BG)
+    mark = max_side_resize(mark_src, int(size * scale_pct))
+    mx = (size - mark.width) // 2
+    my = (size - mark.height) // 2 - int(size * 0.02)
+    canvas.alpha_composite(mark, (mx, my))
+    return canvas
+
+# Thickened mark for tiny favicon sizes (dilate alpha channel before scaling down)
+thick_alpha = logo_cream.split()[-1].filter(ImageFilter.MaxFilter(8 * 2 + 1))
+logo_cream_thick = Image.merge("RGBA", (*logo_cream.split()[:3], thick_alpha))
+
+fav_master = favicon_canvas(logo_cream_thick, 0.80, 256)
+fav_master.save(f"{OUT}/favicon.png", "PNG")
+fav_master.resize((32, 32), Image.LANCZOS).save(f"{OUT}/favicon-32.png", "PNG")
+
+# Apple touch icon: larger canvas, keep the crisp original mark
+apple_icon = favicon_canvas(logo_cream, 0.68, 180)
+apple_icon.save(f"{OUT}/apple-touch-icon.png", "PNG")
 
 print("Logo processed:", logo_black.size, "->", f"{OUT}/logo.webp, logo-cream.webp, favicon.png")

@@ -153,12 +153,16 @@
   }
 
   function productCardHTML(p) {
+    var frameStyle = p.image ? "" : ' style="background:linear-gradient(150deg,' + p.colorHex.a + ' 0%,' + p.colorHex.a + ' 45%,' + p.colorHex.b + ' 100%)"';
+    var media = p.image
+      ? '<img class="product-card-img" src="' + escHTML(p.image) + '" alt="' + escHTML(p.name) + '" loading="lazy" decoding="async" />'
+      : '<img class="product-card-icon" src="assets/img/cap-icon.svg" alt="" aria-hidden="true" loading="lazy" />';
     return (
       '<article class="product-card" data-tilt>' +
         '<a class="product-card-link" href="producto.html?id=' + encodeURIComponent(p.id) + '">' +
-          '<div class="product-card-frame" style="background:linear-gradient(150deg,' + p.colorHex.a + ' 0%,' + p.colorHex.a + ' 45%,' + p.colorHex.b + ' 100%)">' +
+          '<div class="product-card-frame"' + frameStyle + '>' +
             stockBadgeHTML(p) +
-            '<img class="product-card-icon" src="assets/img/cap-icon.svg" alt="" aria-hidden="true" loading="lazy" />' +
+            media +
           "</div>" +
           '<div class="product-card-body">' +
             '<h3 class="product-card-name">' + escHTML(p.name) + "</h3>" +
@@ -194,8 +198,13 @@
 
     var gallery = $("[data-product-gallery]", root);
     if (gallery) {
-      gallery.style.background = "linear-gradient(150deg," + p.colorHex.a + " 0%," + p.colorHex.a + " 45%," + p.colorHex.b + " 100%)";
-      gallery.innerHTML = '<img class="product-gallery-icon" src="assets/img/cap-icon.svg" alt="" aria-hidden="true" />';
+      if (p.image) {
+        gallery.style.background = "";
+        gallery.innerHTML = '<img src="' + escHTML(p.image) + '" alt="' + escHTML(p.name) + '" loading="eager" decoding="async" />';
+      } else {
+        gallery.style.background = "linear-gradient(150deg," + p.colorHex.a + " 0%," + p.colorHex.a + " 45%," + p.colorHex.b + " 100%)";
+        gallery.innerHTML = '<img class="product-gallery-icon" src="assets/img/cap-icon.svg" alt="" aria-hidden="true" />';
+      }
     }
     var titleEl = $("[data-product-name]", root); if (titleEl) titleEl.textContent = p.name;
     var priceEl = $("[data-product-price]", root); if (priceEl) priceEl.textContent = formatCLP(p.priceCLP);
@@ -253,10 +262,14 @@
       itemsWrap.innerHTML = cart.map(function (item) {
         var p = findProduct(item.id);
         if (!p) return "";
+        var thumbStyle = p.image ? "" : "background:linear-gradient(150deg," + p.colorHex.a + "," + p.colorHex.b + ");";
+        var thumbMedia = p.image
+          ? '<img src="' + escHTML(p.image) + '" alt="" style="width:100%;height:100%;object-fit:cover" />'
+          : '<img src="assets/img/cap-icon.svg" alt="" style="position:absolute;inset:0;margin:auto;width:55%;height:55%;object-fit:contain;opacity:.9" />';
         return (
           '<div class="cart-item" data-id="' + p.id + '">' +
-            '<div style="background:linear-gradient(150deg,' + p.colorHex.a + ',' + p.colorHex.b + ');border-radius:10px;width:90px;height:90px;position:relative;overflow:hidden">' +
-              '<img src="assets/img/cap-icon.svg" alt="" style="position:absolute;inset:0;margin:auto;width:55%;height:55%;object-fit:contain;opacity:.9" />' +
+            '<div style="' + thumbStyle + 'border-radius:10px;width:90px;height:90px;position:relative;overflow:hidden">' +
+              thumbMedia +
             "</div>" +
             '<div>' +
               '<p class="cart-item-name">' + escHTML(p.name) + "</p>" +
