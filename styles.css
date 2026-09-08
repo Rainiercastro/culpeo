@@ -113,6 +113,7 @@ table { border-collapse: collapse; width: 100%; }
 .kicker {
   font-family: var(--mono); font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
   color: var(--accent); display: inline-flex; align-items: center; gap: .5em; margin-bottom: 1rem;
+  vertical-align: top;
 }
 .kicker::before { content: ""; width: 1.4em; height: 1px; background: var(--accent); display: inline-block; }
 
