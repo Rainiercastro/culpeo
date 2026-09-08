@@ -1,0 +1,7 @@
+# Dev-only source originals — not needed on the deployed site
+assets/photos/source/
+assets/img/products/source/
+
+# OS junk
+.DS_Store
+Thumbs.db

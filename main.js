@@ -177,8 +177,9 @@
   function mountProducts() {
     $$("[data-products]").forEach(function (target) {
       if (target.children.length > 0 || !DATA.products) return;
+      var available = DATA.products.filter(function (p) { return !!p.image; });
       var limit = parseInt(target.getAttribute("data-limit") || "0", 10);
-      var list = limit ? DATA.products.slice(0, limit) : DATA.products;
+      var list = limit ? available.slice(0, limit) : available;
       target.innerHTML = list.map(productCardHTML).join("");
     });
     initCardInteractions();
